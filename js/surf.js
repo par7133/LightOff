@@ -39,9 +39,15 @@ function LIGHTOFFhideImages() {
   
   s = document.body.innerHTML;
 
-  s = s.replaceAll('src="', 'src="none"');
-  s = s.replaceAll("src='", "src='none'");
-
+  //s = s.replaceAll('src="', 'src="none-');
+  //s = s.replaceAll("src='", "src='none-");
+  s = s.replaceAll(/.png/gi, ".404png");
+  s = s.replaceAll(/.jpg/gi, ".404jpg");
+  s = s.replaceAll(/.jpeg/gi, ".404jpeg");
+  s = s.replaceAll(/.gif/gi, ".404gif");
+  s = s.replaceAll(/.webp/gi, ".404webp");
+  s = s.replaceAll(/.svg/gi, ".404svg");
+  
   document.body.innerHTML = s;
 
 }
