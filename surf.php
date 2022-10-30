@@ -32,7 +32,10 @@ echo("<div style='top:5px;font-weight:900;background-color:#FFFFFF;'>&nbsp;LIGHT
 
 $url = filter_input(INPUT_GET, "url", FILTER_SANITIZE_STRING);
 //echo($url."<br>");
-
+if ($url == "") {
+  echo "<p>404 LightOff url doesn't exist.</p>\n";
+  exit;
+}
 if (substr($url, 0, 4) === "http") {
   $ipos = stripos($url, "/", 8);
   if ($ipos) {
@@ -101,6 +104,11 @@ $body = str_ireplace('href="/', 'href="'.$domain.'/', $body);
 $body = preg_replace('/href="(.{6}(?<!http:\/)(?<!https:)(?<!ftp:\/\/).+)"/iU', "href=\"".$domain."/$1\"", $body); 
 $body = preg_replace("/href='(.{6}(?<!http:\/)(?<!https:)(?<!ftp:\/\/).+)'/iU", "href='".$domain."/$1'", $body);
 //$body = preg_replace("/href=(.{6}(?<!http:\/)(?<!https:)(?<!ftp:\/\/).+)/iU", "href='".$domain."/$1'", $body);
+
+$body = str_ireplace('action="//', 'action="'.APP_HOST.'/surf.php?url=https://', $body);
+$body = str_ireplace('action="/', 'action="'.APP_HOST.'/surf.php?url='.$domain.'/', $body);
+$body = preg_replace('/action="(.{6}(?<!http:\/)(?<!https:)(?<!ftp:\/\/).+)"/iU', "action=\"".APP_HOST."/surf.php?url=".$domain."/$1\"", $body); 
+$body = preg_replace("/action='(.{6}(?<!http:\/)(?<!https:)(?<!ftp:\/\/).+)'/iU", "action='".APP_HOST."/surf.php?url=".$domain."/$1'", $body);
 
 $body = preg_replace('/href="(.+)"/iU', "href=\"".APP_HOST."/surf.php?url=$1\"", $body); 
 
