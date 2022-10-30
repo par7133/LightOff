@@ -1,2 +1,2 @@
 # LightOff
-Let everyone surf by a confortable gray light and imageless
+Let everyone surf by a confortable gray light and imageless (on premise) - GPL License
