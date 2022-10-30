@@ -28,7 +28,7 @@
 
 require("config.inc");
 
-echo("<div style='top:5px;font-weight:900;background-color:#FFFFFF;'>&nbsp;LIGHTOFF&nbsp;</div><br><br>");
+echo("<div style='top:5px;font-weight:900;background-color:#FFFFFF;'>&nbsp;LIGHTOFF&nbsp;&nbsp;(<a href='http://github.com/par7133/LightOff' target='_blank'>on github</a>)</div><br><br>");
 
 $url = filter_input(INPUT_GET, "url", FILTER_SANITIZE_STRING);
 //echo($url."<br>");
@@ -71,36 +71,28 @@ if (mb_stripos($head, "<base") === false ) {
   $head = str_ireplace("</head>", "<base href='$domain/'>\n</head>", $head);
 }  
 
+$head = str_ireplace('src="//', 'src="https://', $head);
 $head = str_ireplace('src="/', 'src="'.$domain.'/', $head);
 $head = str_ireplace('src="js/', 'src="'.$domain.'/js/', $head);
 $head = str_ireplace('src="/js/', 'src="'.$domain.'/js/', $head);
 $head = str_ireplace('href="//', 'href="https://', $head);
 $head = str_ireplace('href="/', 'href="'.$domain.'/', $head);
-$head = str_ireplace('href="a', 'href="'.$domain.'/a', $head);
-$head = str_ireplace('href="c', 'href="'.$domain.'/c', $head);
-$head = str_ireplace('href="d', 'href="'.$domain.'/d', $head);
-$head = str_ireplace('href="i', 'href="'.$domain.'/i', $head);
+$head = preg_replace('/href="(.{6}(?<!http:\/)(?<!https:)(?<!ftp:\/\/).+)"/iU', "href=\"".$domain."/$1\"", $head); 
 
 //$body = preg_replace("/<body .+>/iU", "$0\n<form id='LIGHTOFFfrmUpload' role='form' method='get' action='/surf2.php' target='_self' enctype='multipart/form-data'>\n<div id='LIGHTOFFcontent'><div id='LIGHTOFFheader-surf'><br>&nbsp;&nbsp;<span style='font-weight:900;'>LIGHTOFF</span><br></div>", $body);
 
 //$body = str_ireplace("</body>", "<input type='url' id='LIGHTOFFurl' name='LIGHTOFFurl' value='https://5mode.com' style='display: none;'>&nbsp;<input id='LIGHTOFFSubmit' name='LIGHTOFFSubmit' type='submit' style='display: none;'><br>\n\n</div>\n\n</form>\n\n<script src='http://lightoff.doggy/js/surf.js' type='text/javascript'></script>\n\n</body>", $body); 
 $body = str_ireplace("</body>", "\n\n<script src='http://lightoff.doggy/js/surf.js' type='text/javascript'></script>\n\n</body>", $body); 
 
+$body = str_ireplace('src="//', 'src="https://', $body);
 $body = str_ireplace('src="/', 'src="'.$domain.'/', $body);
 $body = str_ireplace('src="js/', 'src="'.$domain.'/js/', $body);
 $body = str_ireplace('src="/js/', 'src="'.$domain.'/js/', $body);
 $body = str_ireplace('href="//', 'href="https://', $body);
 $body = str_ireplace('href="/', 'href="'.$domain.'/', $body);
-$body = str_ireplace('href="a', 'href="'.$domain.'/a', $body);
-$body = str_ireplace('href="c', 'href="'.$domain.'/c', $body);
-$body = str_ireplace('href="d', 'href="'.$domain.'/d', $body);
-$body = str_ireplace('href="i', 'href="'.$domain.'/i', $body);
+$body = preg_replace('/href="(.{6}(?<!http:\/)(?<!https:)(?<!ftp:\/\/).+)"/iU', "href=\"".$domain."/$1\"", $body); 
 
-//$w = preg_replace('/href="(.+)"/iU', "<href=\"javascript: openLink('$1')\"", $w); 
 $body = preg_replace('/href="(.+)"/iU', "href=\"".APP_HOST."/surf.php?url=$1\"", $body); 
-
-//$w = str_ireplace("</body>", "", $w);
-//$w = str_ireplace("</html>", "", $w);
 
 $w = $head . $body;
 
