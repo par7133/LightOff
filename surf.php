@@ -30,7 +30,8 @@ require("config.inc");
 
 echo("<div style='top:5px;font-weight:900;background-color:#FFFFFF;'>&nbsp;LIGHTOFF&nbsp;&nbsp;(<a href='http://github.com/par7133/LightOff' target='_blank'>on github</a>)</div><br><br>");
 
-$url = filter_input(INPUT_GET, "url", FILTER_SANITIZE_STRING);
+$url = filter_input(INPUT_GET, "url")??"";
+$url = strip_tags($url);
 //echo($url."<br>");
 if ($url == "") {
   echo "<p>404 LightOff url doesn't exist.</p>\n";
