@@ -146,7 +146,7 @@ $w = $head . $body;
 echo($w);    
 
 //YAHOO
-if (mb_stripos($miourl, "yahoo.it")!==false) {
+if (mb_stripos($url, "yahoo.it")!==false) {
 //  echo("<div style='clear:both'>&nbsp;</div><br><br><br><br><br><br><br><br><br>");
 }
 
