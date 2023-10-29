@@ -21,7 +21,7 @@ Not running:
 bing.com<br>
 dogpile.com<br>
 
-### LightOff
+### Screenshots
 
 ![LightOff in action #1](/res/screenshot1.png)<br>
 
