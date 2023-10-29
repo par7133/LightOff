@@ -21,4 +21,6 @@ Not running:
 bing.com<br>
 dogpile.com<br>
 
+![LightOff in action #1](/res/screenshot1.png)<br>
+
 Feedback: <a href="mailto:posta@elettronica.lol">posta@elettronica.lol</a>
