@@ -30,7 +30,7 @@ require("config.inc");
 
 echo("<div style='top:5px;font-weight:900;background-color:#FFFFFF;'>&nbsp;LIGHTOFF&nbsp;&nbsp;(<a href='http://github.com/par7133/LightOff' target='_blank'>on github</a>)</div><br><br>");
 
-$url = filter_input(INPUT_GET, "url")??"";
+$url = filter_input(INPUT_GET, "miourl")??"";
 $url = strip_tags($url);
 //echo($url."<br>");
 if ($url == "") {
@@ -53,6 +53,17 @@ if (substr($url, 0, 4) === "http") {
   }  
 } 
 //echo($domain."<br>");
+
+// xxx
+if (mb_stripos($url, "?") === false) {
+  $url = $url . "?miot=t";
+}
+foreach($_GET as $key=>$val) {
+  if ($key !== "miourl") {
+    $url = $url . "&$key=" . urlencode($val);  
+  }  
+}
+// end xxx
 
 $file = fopen($url, "r");
 if (!$file) {
@@ -106,16 +117,39 @@ $body = preg_replace('/href="(.{6}(?<!http:\/)(?<!https:)(?<!ftp:\/\/).+)"/iU', 
 $body = preg_replace("/href='(.{6}(?<!http:\/)(?<!https:)(?<!ftp:\/\/).+)'/iU", "href='".$domain."/$1'", $body);
 //$body = preg_replace("/href=(.{6}(?<!http:\/)(?<!https:)(?<!ftp:\/\/).+)/iU", "href='".$domain."/$1'", $body);
 
-$body = str_ireplace('action="//', 'action="'.APP_HOST.'/surf.php?url=https://', $body);
-$body = str_ireplace('action="/', 'action="'.APP_HOST.'/surf.php?url='.$domain.'/', $body);
-$body = preg_replace('/action="(.{6}(?<!http:\/)(?<!https:)(?<!ftp:\/\/).+)"/iU', "action=\"".APP_HOST."/surf.php?url=".$domain."/$1\"", $body); 
-$body = preg_replace("/action='(.{6}(?<!http:\/)(?<!https:)(?<!ftp:\/\/).+)'/iU", "action='".APP_HOST."/surf.php?url=".$domain."/$1'", $body);
+//$body = str_ireplace('action="//', 'action="'.APP_HOST.'/surf.php?url=https://', $body);
+//$body = str_ireplace('action="/', 'action="'.APP_HOST.'/surf.php?url='.$domain.'/', $body);
+//$body = str_ireplace('action="//', 'action="https://', $body);
+//$body = str_ireplace('action="/', 'action="'.$domain.'/', $body);
+$body = str_ireplace('action="https://', 'action="'.APP_HOST.'/post.php?miourl=https://', $body);
+$body = str_ireplace('action="//', 'action="'.APP_HOST.'/post.php?miourl=https://', $body);
+$body = str_ireplace('action="/', 'action="'.APP_HOST.'/post.php?miourl='.$domain.'/', $body);
+$body = preg_replace('/action="(.{6}(?<!http:\/)(?<!https:)(?<!ftp:\/\/).+)"/iU', "action=\"".APP_HOST."/post.php?miourl=".$domain."/$1\"", $body); 
+$body = preg_replace("/action='(.{6}(?<!http:\/)(?<!https:)(?<!ftp:\/\/).+)'/iU", "action='".APP_HOST."/post.php?miourl=".$domain."/$1'", $body);
 
-$body = preg_replace('/href="(.+)"/iU', "href=\"".APP_HOST."/surf.php?url=$1\"", $body); 
+$body = str_ireplace('<form', '<form method="POST"', $body);
+$body = str_ireplace('method="GET', 'method="POST', $body);
+//$body = str_ireplace('</form>', "<input name=\"miourl\" type=\"hidden\"></form>", $body);
+
+//YAHOO
+if ((mb_stripos($url, "yahoo.it")!==false) || (mb_stripos($url, "yahoo.com")!==false))  {
+  $ipos = mb_stripos($body, '<div id="doc"');
+  if ($ipos !== false) {
+    $body = substr($body,$ipos);
+  }
+}
+
+$body = preg_replace('/href="(.+)"/iU', "href=\"".APP_HOST."/surf.php?miourl=$1\"", $body); 
 
 $w = $head . $body;
 
 echo($w);    
+
+//YAHOO
+if (mb_stripos($miourl, "yahoo.it")!==false) {
+//  echo("<div style='clear:both'>&nbsp;</div><br><br><br><br><br><br><br><br><br>");
+}
+
 
 ?>
 
