@@ -3,22 +3,22 @@ Let everyone surf Internet by a confortable gray light and imageless (on premise
    
 Tested against:
 
-abcnews.com
-repubblica.it
-yahoo.it
-google.it
-google.com
-en.wikipedia.org
-it.wikipedia.org
+abcnews.com<br>
+repubblica.it<br>
+yahoo.it<br>
+google.it<br>
+google.com<br>
+en.wikipedia.org<br>
+it.wikipedia.org<br>
 
 Verified some basic functionalities:
 
-news.google.com
-news.google.it
+news.google.com<br>
+news.google.it<br>
 
 Not running:
 
-bing.com
-dogpile.com
+bing.com<br>
+dogpile.com<br>
 
 Feedback: <a href="mailto:posta@elettronica.lol">posta@elettronica.lol</a>
