@@ -26,4 +26,4 @@
  * @copyrights (c) 2016, 2024, 5 Mode
  */
 
-define('APP_HOST', "http://yourdomain.com");
+define('APP_HOST', "http://yoursitename.xyz");
